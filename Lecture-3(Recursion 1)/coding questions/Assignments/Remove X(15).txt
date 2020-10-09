@@ -52,3 +52,39 @@ void removeX(char input[]) {
     
 
 }
+
+
+**********another appraoch by making decision on first character**************
+
+// Change in the given string itself. So no need to return or print anything
+int length(char* ip)
+{
+    int count=0;
+    for(int i=0;ip[i]!='\0';i++)
+        count++;
+    
+    return count;
+}
+void removeX(char input[]) {
+    // Write your code here
+    int n=length(input);
+    if(n==0)
+        return;
+    
+    
+    if(input[0]=='x')
+    {
+        int i;
+        for( i=1;i<=n-1;i++)
+        {
+            input[i-1]=input[i];
+        }
+        input[n-1]='\0';
+        removeX(input);// pass input as it is bcoz we have already reduced the size of string by 1.
+    }
+    else
+        removeX(input+1);
+    
+    
+
+}
