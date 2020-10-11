@@ -1,0 +1,75 @@
+Merge Sort Code
+Send Feedback
+Sort an array A using Merge Sort.
+Change in the input array itself. So no need to return or print anything.
+Input format :
+Line 1 : Integer n i.e. Array size
+Line 2 : Array elements (separated by space)
+Output format :
+Array elements in increasing order (separated by space)
+Constraints :
+1 <= n <= 10^3
+Sample Input 1 :
+6 
+2 6 8 5 4 3
+Sample Output 1 :
+2 3 4 5 6 8
+Sample Input 2 :
+5
+2 1 5 2 3
+Sample Output 2 :
+1 2 2 3 5 
+
+
+________________solution_________________
+
+void mergeSorthelper(int ip[],int start,int end)
+{
+    //base case
+    if(start>=end)
+        return;
+    
+    int mid=(start+end)/2;
+    mergeSorthelper(ip,start,mid); // merge sort called on first half
+    mergeSorthelper(ip,mid+1,end); // merge sort called on second half
+    
+    int* arr=new int[end-start+1]; // array to merge the two sorted halves of size smae as original array
+        
+    int i=start; // pointer to traverse first half
+    int j=mid+1;//pointer to traverse second half
+    int p=0; // pointer to fill new array 'arr'
+    
+    while(i<mid+1 && j<end+1 ) // from here just merge two sorted arrays
+    {
+        if(ip[i]<ip[j])
+            arr[p++]=ip[i++];
+        else if(ip[j]<ip[i])
+            arr[p++]=ip[j++];
+        else 
+            arr[p++]=ip[i++];
+    }
+    while(i<mid+1)
+        arr[p++]=ip[i++];
+    while(j<end+1)
+        arr[p++]=ip[j++];
+    
+    // now copy back the array 'arr' to original array
+    
+    p=0; // use this to traverse new array 'arr' bcoz internally recursion is needed to be handled
+    for(int i=start;i<=end;i++)
+        ip[i]=arr[p++];
+    delete [] arr;
+    
+    
+}
+
+
+
+
+
+void mergeSort(int input[], int size){
+	// Write your code here
+    
+    mergeSorthelper(input,0,size-1);
+        
+}
