@@ -1,0 +1,28 @@
+#include<bits/stdc++.h>
+vector<int> kSmallest(int *input, int n, int k) {
+	// Write your code here
+    priority_queue<int> p;
+    
+    for(int i=0;i<k;i++) // insert first k elements in the PQ and assumne them to be the set of k smallest elements
+        p.push(input[i]);
+    
+    for(int i=k;i<n;i++) // now compare each new element to the max in the PQ 
+    {
+        if(input[i]< p.top()) // if new element is less than top of PQ then insert it and remove max from the queue
+        {
+            p.pop();
+            p.push(input[i]);
+        }
+     
+    } 
+    
+    vector<int> v;
+    while(!p.empty())
+    {
+        v.push_back(p.top());
+        p.pop();
+        
+    }
+    return v;
+
+}
