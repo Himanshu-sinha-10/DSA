@@ -1,0 +1,122 @@
+#include<iostream>
+#include<cstring>
+using namespace std;
+
+int editdistmem(string s1,string s2,int** ans)
+{
+        int m=s1.size();
+        int n=s2.size();
+        //base case
+    
+    if(s1.size()==0 || s2.size()==0 )
+    {
+        return max(s1.size(),s2.size());
+        
+    }
+    
+    if(ans[m][n]!=-1)
+        return ans[m][n];
+    
+    int op;
+    if(s1[0]==s2[0])
+    {
+     op=editdistmem(s1.substr(1),s2.substr(1),ans);
+
+    }
+    else 
+    {
+        //insert(hypothetically)
+        int x=editdistmem(s1.substr(1),s2,ans)+1;
+        
+        //delete(hypothetically)
+        int y=editdistmem(s1,s2.substr(1),ans)+1;
+        
+        //replace(hypothetically)
+        int z=editdistmem(s1.substr(1),s2.substr(1),ans)+1;
+        
+        op=min(x,min(y,z));
+    }
+    
+    ans[m][n]=op;
+    return op;
+}
+
+int editDistance(string s1, string s2){
+
+  /*  Don't write main().
+   *  Don't read input, it is passed as function argument.
+   *  Return output and don't print it.
+   *  Taking input and printing output is handled automatically.
+   */
+    int m=s1.size();
+    int n=s2.size();
+    
+    int** ans=new int*[m+1];
+    for(int i=0;i<=m;i++)
+    {
+        ans[i]=new int[n+1];
+        for(int j=0;j<=n;j++)
+            ans[i][j]=-1;
+    }
+    return editdistmem(s1,s2,ans);
+
+
+}
+
+
+
+
+dpp
+
+
+#include<iostream>
+#include<cstring>
+using namespace std;
+
+int editDistance(string s1, string s2){
+
+  /*  Don't write main().
+   *  Don't read input, it is passed as function argument.
+   *  Return output and don't print it.
+   *  Taking input and printing output is handled automatically.
+   */
+    int m=s1.size();
+    int n=s2.size();
+    
+    int** op=new int*[m+1];
+    for(int i=0;i<=m;i++)
+    {
+        op[i]=new int[n+1];
+            
+    }
+    op[0][0]=0;
+    
+    //fill first row
+    for(int j=1;j<=n;j++)
+        op[0][j]=j;
+    
+    // fill first column
+    for(int i=1;i<=m;i++)
+        op[i][0]=i;
+    
+    for(int i=1;i<=m;i++)
+        for(int j=1;j<=n;j++)
+        {
+            if(s1[m-i]==s2[n-j])
+                op[i][j]=op[i-1][j-1];
+            else
+            {
+                int a=op[i-1][j];
+                int b=op[i-1][j-1];
+                int c=op[i][j-1];
+                
+                int ans=min(a,min(b,c))+1;
+                op[i][j]=ans;
+            }
+        }
+    return op[m][n];
+    
+
+
+}
+
